@@ -10,7 +10,15 @@ class ContatoController extends Controller
 {
     public function index()
     {
-        return response()->json(Contato::all(), 200);
+        $contatos = Contato::all();
+
+        if ($contatos->isEmpty()) {
+            return response()->json([
+                'mensagem' => 'Nenhum contato encontrado.'
+            ], 200); // ou 204 se preferir sem corpo
+        }
+
+        return response()->json($contatos);
     }
 
     public function store(Request $request)
